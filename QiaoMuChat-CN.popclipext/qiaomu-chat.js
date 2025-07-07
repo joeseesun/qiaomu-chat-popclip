@@ -1,24 +1,24 @@
-// QiaoMu Chat PopClip Extension
-// Based on PopClip official JavaScript action specification
+// 乔木智写 PopClip 扩展
+// 基于 PopClip 官方 JavaScript 动作规范
 
-// Message history storage (persistent across calls)
+// 消息历史存储（跨调用持久化）
 if (typeof messages === 'undefined') {
 	var messages = [];
 }
 
-// Last chat timestamp
+// 最后聊天时间戳
 if (typeof lastChat === 'undefined') {
 	var lastChat = new Date();
 }
 
-// Reset conversation history
+// 重置对话历史
 function reset() {
-	print("QiaoMu chat history");
+	print("乔木智写历史记录");
 	messages.length = 0;
-	popclip.showText("Chat history reset", { preview: "✅ Reset complete" });
+	popclip.showText("写作历史已重置", { preview: "✅ 重置完成" });
 }
 
-// Get user-friendly model display name
+// 获取用户友好的模型显示名称
 function getModelDisplayName(modelId) {
 	var modelNames = {
 		"claude-sonnet-4-20250514": "Claude 4",
@@ -34,63 +34,61 @@ function getModelDisplayName(modelId) {
 	return modelNames[modelId] || modelId;
 }
 
-print("QiaoMu Chat: Starting chat action");
+print("乔木智写：开始写作动作");
 
-// Check if API key is provided
+// 检查是否提供了API密钥
 if (!popclip.options.apikey || popclip.options.apikey.trim() === "") {
-	throw new Error("Settings error: missing API key");
+	throw new Error("设置错误：缺少API密钥");
 }
 
-// Check and prepare API Base URL
+// 检查并准备API基础URL
 var apiBaseUrl = popclip.options.apiBaseUrl || "https://api.tu-zi.com/v1";
 apiBaseUrl = apiBaseUrl.trim();
 
-// Remove trailing slash if present
+// 移除末尾的斜杠（如果存在）
 if (apiBaseUrl.endsWith("/")) {
 	apiBaseUrl = apiBaseUrl.slice(0, -1);
 }
 
-// Validate URL format
+// 验证URL格式
 if (!apiBaseUrl.startsWith("http://") && !apiBaseUrl.startsWith("https://")) {
-	throw new Error("Settings error: API Base URL must start with http:// or https://");
+	throw new Error("设置错误：API基础URL必须以http://或https://开头");
 }
 
-// Construct full API endpoint
+// 构建完整的API端点
 var apiEndpoint = apiBaseUrl + "/chat/completions";
-print("QiaoMu Chat: Using API endpoint: " + apiEndpoint);
+print("乔木智写：使用API端点：" + apiEndpoint);
 
-
-
-// Add system message if this is the start of conversation
+// 如果这是对话开始，添加系统消息
 if (messages.length === 0) {
 	var systemMessage = popclip.options.systemMessage ? popclip.options.systemMessage.trim() : "";
 	if (systemMessage) {
 		messages.push({ role: "system", content: systemMessage });
-		print("QiaoMu Chat: Added system message");
+		print("乔木智写：已添加系统消息");
 	}
 }
 
-// Add user message to history
+// 将用户消息添加到历史记录
 messages.push({ role: "user", content: popclip.input.text.trim() });
-print("QiaoMu Chat: Added user message, total messages: " + messages.length);
+print("乔木智写：已添加用户消息，总消息数：" + messages.length);
 
-// Determine which model to use: custom model takes priority
+// 确定使用哪个模型：自定义模型优先
 var selectedModel;
 var customModel = popclip.options.customModel ? popclip.options.customModel.trim() : "";
 
 if (customModel && customModel.length > 0) {
 	selectedModel = customModel;
-	print("QiaoMu Chat: Using custom model: " + selectedModel);
+	print("乔木智写：使用自定义模型：" + selectedModel);
 } else {
 	selectedModel = popclip.options.model || "claude-sonnet-4-20250514";
-	print("QiaoMu Chat: Using preset model: " + selectedModel);
+	print("乔木智写：使用预设模型：" + selectedModel);
 }
 
-// Show processing indicator with current model
+// 显示处理指示器和当前模型
 var modelName = customModel && customModel.length > 0 ? customModel : getModelDisplayName(selectedModel);
-popclip.showText("Processing with " + modelName + "...");
+popclip.showText("正在使用 " + modelName + " 处理中...");
 
-// Prepare request data
+// 准备请求数据
 var requestData = {
 	model: selectedModel,
 	messages: messages,
@@ -98,10 +96,10 @@ var requestData = {
 	temperature: 0.7
 };
 
-// Use axios for HTTP request (PopClip bundled library)
+// 使用axios进行HTTP请求（PopClip内置库）
 var axios = require("axios");
 
-// Make the API request (async operation - PopClip handles async automatically)
+// 发起API请求（异步操作 - PopClip自动处理异步）
 var response = await axios.post(apiEndpoint, requestData, {
 	headers: {
 		"Authorization": "Bearer " + popclip.options.apikey,
@@ -115,36 +113,36 @@ var assistantMessage = data.choices[0].message;
 messages.push(assistantMessage);
 lastChat = new Date();
 
-print("QiaoMu Chat: Received response from " + modelName);
+print("乔木智写：已收到来自 " + modelName + " 的回复");
 
-// Determine response mode - prioritize modifier keys over settings
+// 确定响应模式 - 修饰键优先于设置
 var responseMode = popclip.options.textMode || "copy";
 
-// Modifier key overrides (simplified logic)
+// 修饰键覆盖（简化逻辑）
 if (popclip.modifiers.shift) {
-	responseMode = "copy";  // Shift = force copy mode
+	responseMode = "copy";  // Shift = 强制复制模式
 } else if (popclip.modifiers.option) {
-	responseMode = "replace";  // Option = force replace mode
+	responseMode = "replace";  // Option = 强制替换模式
 }
 
-print("QiaoMu Chat: Using response mode: " + responseMode);
+print("乔木智写：使用响应模式：" + responseMode);
 
-// Handle response based on determined mode
+// 根据确定的模式处理响应
 if (responseMode === "copy") {
-	// Copy only the AI response to clipboard
+	// 仅将AI回复复制到剪贴板
 	popclip.copyText(assistantMessage.content.trim());
 	popclip.showSuccess();
-	// Don't return anything - let PopClip handle success display
+	// 不返回任何内容 - 让PopClip处理成功显示
 	return;
 } else if (responseMode === "replace") {
-	// Replace selected text with AI response only
+	// 仅用AI回复替换选中的文本
 	popclip.pasteText(assistantMessage.content.trim());
 	return;
 } else {
-	// Append mode: add AI response after the original text
+	// 追加模式：在原文本后添加AI回复
 	var appendedText = popclip.input.text.trim() + "\n\n" + assistantMessage.content.trim();
 	popclip.pasteText(appendedText);
 	return;
 }
 
-// No exports needed, PopClip finds global functions by name 
+// 不需要exports，PopClip通过名称查找全局函数 

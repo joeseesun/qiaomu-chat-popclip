@@ -1,15 +1,11 @@
-# QiaoMu Chat PopClip Extension
+# 乔木智写 PopClip 扩展
 
 一个强大的 PopClip 扩展，支持多种 AI 服务商和模型的智能对话助手。
-
-> 🇨🇳 **中文用户**: 请使用 [乔木智写中文版](README-CN.md) 和 `QiaoMuChat-CN.popclipext` 插件文件夹。
-> 
-> 🇺🇸 **English Users**: Use this README and the `QiaoMuChat.popclipext` plugin folder.
 
 ## 功能特点
 
 ### 🌐 多服务商支持
-- **可配置 API Base URL** - 兼容任何 OpenAI 格式的 API
+- **可配置 API 基础地址** - 兼容任何 OpenAI 格式的 API
 - **默认支持 TuZi API** - `https://api.tu-zi.com/v1`
 - **兼容其他服务商**：
   - DeepSeek: `https://api.deepseek.com/v1`
@@ -19,7 +15,7 @@
 
 ### 🤖 多模型支持
 - **自定义模型** - 支持输入任意模型名称，优先级最高
-- **Claude 4** (默认) - 最新最强大的模型
+- **Claude 4**（推荐）- 最新最强大的模型
 - **Claude 3 系列** - Haiku, Opus
 - **GPT-4o 系列** - Mini, 标准版, All
 - **O3 Mini** - OpenAI 最新模型
@@ -36,7 +32,7 @@
 ### ⚡ 便捷操作
 - **快捷键支持**：
   - 普通点击：复制模式
-  - Shift + 点击：追加模式
+  - Shift + 点击：强制复制模式
   - Option + 点击：替换模式
 - **一键重置** - 清除对话历史
 
@@ -49,60 +45,55 @@
    ```
 
 2. **安装插件**
-   - 双击 `QiaoMuChat.popclipext` 文件夹
+   - 双击 `QiaoMuChat-CN.popclipext` 文件夹
    - PopClip 会自动识别并安装插件
 
 3. **配置 API**
-   - 在 PopClip 设置中找到 "QiaoMu Chat"
-   - 配置 API Base URL（默认为 TuZi API）
-   - 输入对应服务的 API Key
+   - 在 PopClip 设置中找到 "乔木智写"
+   - 配置 API 基础地址（默认为 TuZi API）
+   - 输入对应服务的 API 密钥
    - 选择默认使用的 AI 模型
 
 ## 使用方法
 
 1. **选择文本** - 在任何应用中选择要处理的文本
-2. **点击图标** - 在 PopClip 弹出菜单中点击 QiaoMu Chat 图标
+2. **点击图标** - 在 PopClip 弹出菜单中点击乔木智写图标
 3. **获取回复** - AI 会分析文本并提供智能回复
 4. **选择模式**：
    - 普通点击：复制到剪贴板
-   - Shift + 点击：追加到原文本
+   - Shift + 点击：强制复制模式
    - Option + 点击：替换选中文本
 
 ## 配置选项
 
 ### API 设置
-- **API Base URL**: 配置 AI 服务的基础 URL
-- **API Key**: 你的 API 密钥
+- **API 基础地址**: 配置 AI 服务的基础 URL
+- **API 密钥**: 你的 API 密钥
 - **自定义模型名称**: 输入自定义模型名（可选，优先级最高）
-- **模型选择**: 选择默认使用的 AI 模型（当未填写自定义模型时使用）
+- **AI 模型**: 选择默认使用的 AI 模型（当未填写自定义模型时使用）
 - **响应模式**: 设置默认的文本处理方式
 - **系统提示**: 自定义 AI 的行为和风格
 
 ### 支持的服务商配置
 
-#### TuZi API (默认)
-- **Base URL**: `https://api.tu-zi.com/v1`
+#### TuZi API（默认）
+- **基础地址**: `https://api.tu-zi.com/v1`
 - **支持模型**: Claude 4, Claude 3 系列, GPT-4o 系列等
 
 #### DeepSeek API
-- **Base URL**: `https://api.deepseek.com/v1`
+- **基础地址**: `https://api.deepseek.com/v1`
 - **支持模型**: DeepSeek V3, DeepSeek Chat 等
-- **获取 API Key**: [DeepSeek 官网](https://platform.deepseek.com/)
+- **获取 API 密钥**: [DeepSeek 官网](https://platform.deepseek.com/)
 
 #### OpenAI API
-- **Base URL**: `https://api.openai.com/v1`
+- **基础地址**: `https://api.openai.com/v1`
 - **支持模型**: GPT-4o, GPT-4o Mini, O3 Mini 等
-- **获取 API Key**: [OpenAI 官网](https://platform.openai.com/)
-
-#### 火山引擎 API
-- **Base URL**: `https://ark.cn-beijing.volces.com/api/v3/`
-- **支持模型**: 豆包系列模型等
-- **获取 API Key**: [火山引擎官网](https://console.volcengine.com/)
+- **获取 API 密钥**: [OpenAI 官网](https://platform.openai.com/)
 
 #### 其他兼容服务
 任何兼容 OpenAI API 格式的服务都可以使用，只需：
-1. 设置正确的 Base URL
-2. 输入对应的 API Key
+1. 设置正确的基础地址
+2. 输入对应的 API 密钥
 3. 选择支持的模型或输入自定义模型名称
 
 #### 自定义模型使用
@@ -128,13 +119,13 @@
 ### 常见问题
 
 1. **插件无法点击**
-   - 检查是否正确配置了 API Base URL 和 API Key
+   - 检查是否正确配置了 API 基础地址和 API 密钥
    - 确认网络连接正常
 
 2. **请求失败**
-   - 验证 API Key 是否有效
+   - 验证 API 密钥是否有效
    - 检查 API 配额是否充足
-   - 确认 Base URL 格式正确（必须以 http:// 或 https:// 开头）
+   - 确认基础地址格式正确（必须以 http:// 或 https:// 开头）
 
 3. **响应慢**
    - 尝试切换到更快的模型（如 Claude 3 Haiku）
@@ -162,7 +153,7 @@
 - 📝 完善文档说明和使用示例
 
 ### v2.0.0
-- 🆕 添加可配置的 API Base URL
+- 🆕 添加可配置的 API 基础地址
 - 🆕 支持多种 AI 服务商（TuZi, DeepSeek, OpenAI 等）
 - 🆕 兼容任何 OpenAI 格式的 API
 - ✅ 修复所有响应模式的显示问题

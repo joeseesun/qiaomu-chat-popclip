@@ -1,10 +1,15 @@
-// Reset conversation history
-print("QiaoMu Chat: Resetting conversation history");
+// Reset QiaoMu Chat conversation history
+
+print("Resetting QiaoMu chat history");
 
 // Clear message history
-messages = [];
+if (typeof messages !== 'undefined') {
+    messages.length = 0;
+}
 
-// Show success message
-popclip.showText("Chat history reset successfully");
+// Reset timestamp
+if (typeof lastChat !== 'undefined') {
+    lastChat = new Date();
+}
 
-return "Chat history has been reset"; 
+return "Chat history reset successfully"; 
