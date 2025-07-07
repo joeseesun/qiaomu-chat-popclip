@@ -1,0 +1,143 @@
+{
+  "name": "乔木AI助手",
+  "identifier": "com.qiaomu.popclip.ai.cn",
+  "description": "多功能AI助手：对话、扩写、翻译、解释等",
+  "icon": "qiaomu-icon.svg",
+  "popclipVersion": 4151,
+  "entitlements": ["network"],
+  "options": [
+    {
+      "identifier": "apiBaseUrl",
+      "type": "string",
+      "label": "API 基础地址",
+      "defaultValue": "https://api.tu-zi.com/v1"
+    },
+    {
+      "identifier": "apikey",
+      "type": "secret",
+      "label": "API 密钥"
+    },
+    {
+      "identifier": "customModel",
+      "type": "string",
+      "label": "自定义模型名称（可选）",
+      "defaultValue": ""
+    },
+    {
+      "identifier": "model",
+      "type": "multiple",
+      "label": "AI 模型",
+      "values": [
+        "claude-sonnet-4-20250514",
+        "claude-sonnet-4-20250514-thinking",
+        "claude-opus-4-20250514",
+        "gemini-2.5-pro-preview-06-05",
+        "o3-mini",
+        "gpt-4o-mini",
+        "gpt-4o",
+        "gpt-4-all",
+        "grok-3",
+        "deepseek-v3"
+      ],
+      "valueLabels": [
+        "Claude 4 Sonnet（推荐）",
+        "Claude 4 Sonnet Thinking（推理模型）",
+        "Claude 4 OPus（最贵但最好）",
+        "Gemini 2.5 Pro",
+        "O3 Mini",
+        "GPT-4o Mini",
+        "GPT-4o",
+        "GPT-4 All",
+        "Grok-3",
+        "DeepSeek V3"
+      ],
+      "defaultValue": "claude-sonnet-4-20250514"
+    },
+    {
+      "identifier": "textMode",
+      "type": "multiple",
+      "label": "响应模式",
+      "values": ["append", "copy", "replace"],
+      "valueLabels": ["追加（问题+答案）", "仅复制到剪贴板", "替换选中文本"],
+      "defaultValue": "append"
+    },
+    {
+      "identifier": "enableChat",
+      "type": "boolean",
+      "label": "启用智能对话",
+      "defaultValue": true
+    },
+    {
+      "identifier": "enableExpand",
+      "type": "boolean",
+      "label": "启用文本扩写",
+      "defaultValue": true
+    },
+    {
+      "identifier": "enableTranslate",
+      "type": "boolean",
+      "label": "启用翻译转换",
+      "defaultValue": false
+    },
+    {
+      "identifier": "enableExplain",
+      "type": "boolean",
+      "label": "启用内容解释",
+      "defaultValue": false
+    },
+    {
+      "identifier": "customChatPrompt",
+      "type": "string",
+      "label": "智能对话自定义提示词（可选）",
+      "defaultValue": ""
+    },
+    {
+      "identifier": "customExpandPrompt",
+      "type": "string",
+      "label": "文本扩写自定义提示词（可选）",
+      "defaultValue": ""
+    },
+    {
+      "identifier": "customTranslatePrompt",
+      "type": "string",
+      "label": "翻译转换自定义提示词（可选）",
+      "defaultValue": ""
+    },
+    {
+      "identifier": "customExplainPrompt",
+      "type": "string",
+      "label": "内容解释自定义提示词（可选）",
+      "defaultValue": ""
+    }
+  ],
+  "actions": [
+    {
+      "title": "智能对话",
+      "identifier": "chat",
+      "icon": "chat-icon.svg",
+      "javascriptFile": "qiaomu-chat.js",
+      "requirements": ["text", "option-enableChat=1"]
+    },
+    {
+      "title": "文本扩写",
+      "identifier": "expand",
+      "icon": "expand-icon.svg",
+      "javascriptFile": "qiaomu-expand.js",
+      "requirements": ["text", "option-enableExpand=1"]
+    },
+    {
+      "title": "翻译转换",
+      "identifier": "translate",
+      "icon": "translate-icon.svg",
+      "javascriptFile": "qiaomu-translate.js",
+      "requirements": ["text", "option-enableTranslate=1"]
+    },
+    {
+      "title": "内容解释",
+      "identifier": "explain",
+      "icon": "explain-icon.svg",
+      "javascriptFile": "qiaomu-explain.js",
+      "requirements": ["text", "option-enableExplain=1"]
+    }
+  ]
+} 
