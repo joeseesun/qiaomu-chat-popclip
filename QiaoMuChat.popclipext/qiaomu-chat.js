@@ -135,8 +135,7 @@ print("QiaoMu Chat: Using response mode: " + responseMode);
 if (responseMode === "copy") {
 	// Copy only the AI response to clipboard
 	popclip.copyText(assistantMessage.content.trim());
-	popclip.showSuccess();
-	// Don't return anything - let PopClip handle success display
+	popclip.showText("✅ Copied to clipboard", { preview: "Copy successful" });
 	return;
 } else if (responseMode === "replace") {
 	// Replace selected text with AI response only

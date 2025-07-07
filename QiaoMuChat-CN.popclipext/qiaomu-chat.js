@@ -133,8 +133,7 @@ print("乔木智写：使用响应模式：" + responseMode);
 if (responseMode === "copy") {
 	// 仅将AI回复复制到剪贴板
 	popclip.copyText(assistantMessage.content.trim());
-	popclip.showSuccess();
-	// 不返回任何内容 - 让PopClip处理成功显示
+	popclip.showText("✅ 已复制到剪贴板", { preview: "复制成功" });
 	return;
 } else if (responseMode === "replace") {
 	// 仅用AI回复替换选中的文本

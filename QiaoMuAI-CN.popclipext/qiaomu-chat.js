@@ -221,7 +221,7 @@ try {
 			if (responseMode === "copy") {
 				// 仅将AI回复复制到剪贴板
 				popclip.copyText(assistantMessage.content.trim());
-				popclip.showSuccess();
+				popclip.showText("✅ 已复制到剪贴板", { preview: "复制成功" });
 				return;
 			} else if (responseMode === "replace") {
 				// 仅用AI回复替换选中的文本
