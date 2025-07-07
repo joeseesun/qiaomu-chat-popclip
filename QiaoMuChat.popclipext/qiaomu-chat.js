@@ -118,13 +118,15 @@ lastChat = new Date();
 print("QiaoMu Chat: Received response from " + modelName);
 
 // Determine response mode - prioritize modifier keys over settings
-var responseMode = popclip.options.textMode || "copy";
+var responseMode = popclip.options.textMode || "append";
 
-// Modifier key overrides (simplified logic)
+// Modifier key overrides (complete logic)
 if (popclip.modifiers.shift) {
 	responseMode = "copy";  // Shift = force copy mode
 } else if (popclip.modifiers.option) {
 	responseMode = "replace";  // Option = force replace mode
+} else if (popclip.modifiers.command) {
+	responseMode = "append";  // Command = force append mode
 }
 
 print("QiaoMu Chat: Using response mode: " + responseMode);
