@@ -181,11 +181,13 @@ try {
 			// 确定响应模式 - 修饰键优先于设置
 			var responseMode = popclip.options.textMode || "append";
 
-			// 修饰键覆盖（简化逻辑）
+			// 修饰键覆盖（完整逻辑）
 			if (popclip.modifiers.shift) {
 				responseMode = "copy";  // Shift = 强制复制模式
 			} else if (popclip.modifiers.option) {
 				responseMode = "replace";  // Option = 强制替换模式
+			} else if (popclip.modifiers.command) {
+				responseMode = "append";  // Command = 强制追加模式
 			}
 
 			print("乔木AI：使用响应模式：" + responseMode);
