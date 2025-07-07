@@ -2,6 +2,36 @@
 
 多功能AI助手，提供智能对话、文本扩写、翻译转换、内容解释等功能。
 
+## 🎯 推荐使用
+
+### ⭐ 推荐版本：QiaoMuAI-CN.popclipext
+
+**🚀 一键安装，开箱即用**：
+- 下载 `QiaoMuAI-CN.popclipext` 文件夹
+- 双击安装到PopClip
+- 配置API密钥即可使用
+
+**🌐 全API支持**：
+- 支持火山引擎API（豆包模型）
+- 支持DeepSeek API（DeepSeek V3）
+- 支持兔子API（Claude 4, GPT-4o等）
+- 支持OpenRouter API（聚合多家模型）
+- 兼容所有OpenAI格式API
+
+**🎨 自定义功能**：
+- 支持自定义Prompt（通过修改扩写、翻译、解释的提示词实现）
+- 四大功能独立控制开关
+- 灵活的响应模式配置
+- 注：无法修改图标，如需自定义图标请下载源码修改
+
+### 🛠️ 开发者选项
+
+**源码定制**：
+- 下载完整源码
+- 使用Claude Code或Cursor进行修改
+- 完全自定义功能和界面
+- 适合有开发需求的用户
+
 ## 🌟 功能特点
 
 ### 🎯 多功能AI工具
@@ -163,6 +193,17 @@
 - **基础地址**：`https://ark.cn-beijing.volces.com/api/v3/`
 - **支持模型**：豆包系列模型等
 - **获取API密钥**：[火山引擎官网](https://console.volcengine.com/)
+
+### Google Gemini API
+- **基础地址**：`https://generativelanguage.googleapis.com/v1beta`
+- **支持模型**：Gemini 2.5 Pro, Gemini 1.5 Pro等
+- **获取API密钥**：[Google AI Studio](https://aistudio.google.com/)
+
+### OpenRouter API
+- **基础地址**：`https://openrouter.ai/api/v1/`
+- **支持模型**：聚合多家AI模型，包括Claude、GPT、Gemini等
+- **获取API密钥**：[OpenRouter官网](https://openrouter.ai/)
+- **特点**：一个API密钥访问多家AI模型，支持按需付费
 
 ## 🛠️ 故障排除
 

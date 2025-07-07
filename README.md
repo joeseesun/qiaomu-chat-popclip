@@ -1,10 +1,40 @@
-# QiaoMu Chat PopClip Extension
+# QiaoMu AI Assistant PopClip Extension
 
 一个强大的 PopClip 扩展，支持多种 AI 服务商和模型的智能对话助手。
 
-> 🇨🇳 **中文用户**: 请使用 [乔木智写中文版](README-CN.md) 和 `QiaoMuChat-CN.popclipext` 插件文件夹。
+> 🇨🇳 **中文用户**: 请使用 [乔木AI助手中文版](README-AI-CN.md) 和 `QiaoMuAI-CN.popclipext` 插件文件夹。
 > 
 > 🇺🇸 **English Users**: Use this README and the `QiaoMuChat.popclipext` plugin folder.
+
+## 🎯 Recommended Usage
+
+### ⭐ Recommended Version: QiaoMuAI-CN.popclipext
+
+**🚀 One-Click Install, Ready to Use**:
+- Download `QiaoMuAI-CN.popclipext` folder
+- Double-click to install to PopClip
+- Configure API key and start using
+
+**🌐 Full API Support**:
+- Support Volcano Engine API (Doubao models)
+- Support DeepSeek API (DeepSeek V3)
+- Support TuZi API (Claude 4, GPT-4o, etc.)
+- Support OpenRouter API (aggregated models)
+- Compatible with all OpenAI format APIs
+
+**🎨 Customization Features**:
+- Support custom Prompts (via modifying expand, translate, explain prompts)
+- Four independent function toggles
+- Flexible response mode configuration
+- Note: Cannot modify icons, download source code for custom icons
+
+### 🛠️ Developer Options
+
+**Source Code Customization**:
+- Download complete source code
+- Modify with Claude Code or Cursor
+- Fully customize functions and interface
+- Suitable for users with development needs
 
 ## 功能特点
 
