@@ -1,0 +1,12 @@
+{
+  "name": "Test Plugin",
+  "identifier": "com.test.simple",
+  "description": "Simple test",
+  "javascript file": "simple-test.js",
+  "actions": [
+    {
+      "title": "Test",
+      "code": "chat"
+    }
+  ]
+} 

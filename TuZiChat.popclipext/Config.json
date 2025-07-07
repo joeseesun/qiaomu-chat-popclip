@@ -1,0 +1,86 @@
+{
+  "name": "QiaoMu Chat",
+  "identifier": "com.qiaomu.popclip.chat",
+  "description": "AI chat assistant powered by QiaoMu API with multiple model support",
+  "icon": "qiaomu-icon.svg",
+  "popclipVersion": 4151,
+  "entitlements": ["network"],
+  "options": [
+    {
+      "identifier": "apikey",
+      "type": "secret",
+      "label": "QiaoMu API Key",
+      "description": "Your QiaoMu API key from tu-zi.com"
+    },
+    {
+      "identifier": "model",
+      "type": "multiple",
+      "label": "AI Model",
+      "description": "Select the AI model to use",
+      "values": [
+        "claude-sonnet-4-20250514",
+        "claude-3-haiku-20240307",
+        "claude-3-opus-20240229",
+        "o3-mini",
+        "gpt-4o-mini",
+        "gpt-4o",
+        "gpt-4-all",
+        "gemini-2.5-pro-preview-06-05",
+        "deepseek-v3"
+      ],
+      "valueLabels": [
+        "Claude 4 (Recommended)",
+        "Claude 3 Haiku",
+        "Claude 3 Opus",
+        "O3 Mini",
+        "GPT-4o Mini",
+        "GPT-4o",
+        "GPT-4 All",
+        "Gemini 2.5 Pro",
+        "DeepSeek V3"
+      ],
+      "defaultValue": "claude-sonnet-4-20250514"
+    },
+    {
+      "identifier": "textMode",
+      "type": "multiple",
+      "label": "Response Mode",
+      "description": "How to handle the AI response",
+      "values": ["append", "copy", "replace"],
+      "valueLabels": ["Append (Question + Answer)", "Copy Only", "Replace Text"],
+      "defaultValue": "append"
+    },
+    {
+      "identifier": "systemMessage",
+      "type": "string",
+      "label": "System Message",
+      "description": "Instructions for the AI assistant",
+      "defaultValue": "You are a helpful AI assistant. Respond clearly and concisely."
+    },
+    {
+      "identifier": "resetMinutes",
+      "type": "string",
+      "label": "Auto Reset (minutes)",
+      "description": "Reset conversation after this many minutes of inactivity (leave empty to disable)",
+      "defaultValue": "30"
+    }
+  ],
+  "actions": [
+    {
+      "title": "Chat",
+      "identifier": "chat",
+      "icon": "qiaomu-icon.svg",
+      "javascriptFile": "qiaomu-chat.js",
+      "requirements": ["text"],
+      "after": "paste-result"
+    },
+    {
+      "title": "Reset",
+      "identifier": "reset",
+      "icon": "reset-icon.svg",
+      "javascriptFile": "reset.js",
+      "requirements": [],
+      "after": "show-result"
+    }
+  ]
+} 

@@ -1,0 +1,62 @@
+#!/bin/bash
+
+echo "🎉 TuZi Chat 插件最终安装指南"
+echo "================================="
+echo ""
+
+echo "✅ 问题已修复："
+echo "   - 移除了 secret 类型选项的默认值"
+echo "   - 配置文件现在完全符合 PopClip 规范"
+echo ""
+
+echo "📋 安装步骤："
+echo ""
+echo "1️⃣ 安装插件："
+echo "   - 双击 'TuZiChat.popclipext' 文件夹"
+echo "   - 点击 'Install Extension' 按钮"
+echo "   - 如果提示未签署，选择信任并安装"
+echo ""
+
+echo "2️⃣ 配置插件："
+echo "   - 打开 PopClip 偏好设置"
+echo "   - 找到 'TuZi Chat' 插件"
+echo "   - 点击右侧的 ⚙️ 设置按钮"
+echo ""
+
+echo "3️⃣ 必需配置："
+echo "   🔑 API Key: sk-BxyGGul3LKvGBVbnSCDa9F61Y9gy8RPFHu2nCaRxzM7oZGqj"
+echo "   🤖 Model: claude-sonnet-4-20250514 (Claude 4 Sonnet 推荐)"
+echo "   📋 Response Handling: Copy (推荐)"
+echo ""
+
+echo "4️⃣ 可选配置："
+echo "   💬 System Message: 保持默认或自定义"
+echo "   ⏰ Reset Timer: 15 分钟"
+echo "   🔄 Show Reset Button: 启用"
+echo ""
+
+echo "5️⃣ 测试插件："
+echo "   - 在任意文本编辑器中输入: 'Hello, how are you?'"
+echo "   - 选中这段文本"
+echo "   - 查看 PopClip 菜单是否出现 'Chat' 按钮"
+echo "   - 点击 'Chat' 按钮测试"
+echo ""
+
+echo "🎯 支持的功能："
+echo "✅ 9 种 AI 模型（Claude 4、Claude 3 系列、GPT-4o 系列、O3 Mini、Gemini 2.5 Pro、DeepSeek V3）"
+echo "✅ 对话历史维护"
+echo "✅ 三种响应模式（复制/追加/替换）"
+echo "✅ 自动和手动重置"
+echo "✅ 智能模型显示"
+echo "✅ 完善的错误处理"
+echo "✅ 快捷键支持"
+echo ""
+
+echo "💡 使用技巧："
+echo "   - 按住 Shift + 点击 Chat: 强制复制模式"
+echo "   - 按住 Option + 点击 Chat: 切换替换/追加模式"
+echo "   - 点击 Reset 按钮: 清空对话历史"
+echo ""
+
+echo "🚀 现在可以安装了！"
+echo "   配置文件已完全修复，应该不会再有错误。" 

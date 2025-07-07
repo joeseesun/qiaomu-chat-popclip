@@ -1,0 +1,61 @@
+#!/bin/bash
+
+echo "🔍 TuZi Chat 插件调试指南"
+echo "================================="
+echo ""
+
+echo "插件能安装但点击没反应，请按以下步骤检查："
+echo ""
+
+echo "1️⃣ 检查插件配置："
+echo "   - 打开 PopClip 偏好设置"
+echo "   - 找到 'TuZi Chat' 插件"
+echo "   - 确认插件已启用（有勾选标记）"
+echo "   - 点击 ⚙️ 设置按钮"
+echo ""
+
+echo "2️⃣ 检查必需配置："
+echo "   ❗ API Key 是否已填入："
+echo "      sk-BxyGGul3LKvGBVbnSCDa9F61Y9gy8RPFHu2nCaRxzM7oZGqj"
+echo "   ❗ Model 是否已选择："
+echo "      claude-sonnet-4-20250514"
+echo ""
+
+echo "3️⃣ 检查文本选择："
+echo "   - 确保选中的是纯文本（不是图片、链接等）"
+echo "   - 文本长度应该 > 0"
+echo "   - 尝试选择简单文本如：'Hello'"
+echo ""
+
+echo "4️⃣ 观察按钮状态："
+echo "   - Chat 按钮是否显示为灰色？"
+echo "   - 按钮是否可以点击？"
+echo "   - 点击时有任何提示吗？"
+echo ""
+
+echo "5️⃣ 查看错误日志："
+echo "   - 打开 '控制台' 应用"
+echo "   - 搜索 'PopClip'"
+echo "   - 查看是否有错误信息"
+echo ""
+
+echo "🧪 测试步骤："
+echo "1. 在文本编辑器中输入：Hello"
+echo "2. 选中 'Hello'"
+echo "3. 观察 PopClip 菜单"
+echo "4. 点击 'Chat' 按钮"
+echo "5. 观察是否有任何反应或错误提示"
+echo ""
+
+echo "💡 常见问题："
+echo "❌ 如果按钮灰色 → API Key 未配置或无效"
+echo "❌ 如果没有按钮 → 插件未启用或文本选择有问题"
+echo "❌ 如果点击无反应 → 网络问题或代码错误"
+echo ""
+
+echo "🔧 请提供以下信息帮助调试："
+echo "1. 插件在偏好设置中的状态（启用/禁用）"
+echo "2. API Key 是否已正确配置"
+echo "3. 选中文本时 Chat 按钮的颜色（正常/灰色）"
+echo "4. 点击时是否有任何提示或错误"
+echo "5. 控制台中的错误日志" 
