@@ -21,8 +21,8 @@ function reset() {
 // 获取用户友好的模型显示名称
 function getModelDisplayName(modelId) {
 	var modelNames = {
-		"claude-sonnet-4-20250514": "Claude 4",
-		"claude-sonnet-4-20250514-thinking": "Claude 4 Thinking",
+		"claude-sonnet-4-20250514": "Claude 4 Sonnet",
+		"claude-sonnet-4-20250514-thinking": "Claude 4 Sonnet Thinking",
 		"claude-opus-4-20250514": "Claude 4 Opus",
 		"claude-3-haiku-20240307": "Claude 3 Haiku",
 		"claude-3-opus-20240229": "Claude 3 Opus",
@@ -40,18 +40,17 @@ function getModelDisplayName(modelId) {
 // 获取超时时间（秒）
 function getTimeoutSeconds() {
 	var timeoutStr = popclip.options.requestTimeout || "60";
-	var timeoutSeconds = parseInt(timeoutStr);
-	return isNaN(timeoutSeconds) ? 60 : timeoutSeconds;
+	var timeout = parseInt(timeoutStr);
+	return isNaN(timeout) || timeout < 15 ? 60 : timeout;  // 默认60秒
 }
 
 // 优化的错误处理函数
 function handleApiError(error) {
 	var errorMessage = error.message || "未知错误";
-	var timeoutSeconds = getTimeoutSeconds();
 	
 	// 超时错误
-	if (errorMessage.includes("timeout") || errorMessage.includes("ECONNABORTED")) {
-		return "请求超时(" + timeoutSeconds + "秒)，请检查网络或选择更快的模型";
+	if (errorMessage.includes("timeout") || errorMessage.includes("ETIMEDOUT")) {
+		return "请求超时，请检查网络连接或增加超时时间";
 	}
 	
 	// 网络连接错误
@@ -140,9 +139,31 @@ try {
 	var timeoutSeconds = getTimeoutSeconds();
 	var timeoutMs = timeoutSeconds * 1000;
 
+	// 确定响应模式 - 修饰键优先于设置
+	var responseMode = popclip.options.textMode || "append";
+
+	// 修饰键覆盖（完整逻辑）
+	if (popclip.modifiers.shift) {
+		responseMode = "copy";  // Shift = 强制复制模式
+	} else if (popclip.modifiers.option) {
+		responseMode = "replace";  // Option = 强制替换模式
+	} else if (popclip.modifiers.command) {
+		responseMode = "append";  // Command = 强制追加模式
+	}
+
+	print("乔木AI：使用响应模式：" + responseMode);
+
 	// 显示处理指示器和当前模型
 	var modelName = customModel && customModel.length > 0 ? customModel : getModelDisplayName(selectedModel);
-	popclip.showText("正在使用 " + modelName + " 对话中...（" + timeoutSeconds + "秒超时）");
+	
+	// 根据响应模式显示不同的loading消息
+	if (responseMode === "copy") {
+		popclip.showText(modelName + " 生成内容...（" + timeoutSeconds + "秒超时）");
+	} else if (responseMode === "replace") {
+		popclip.showText(modelName + " 替换内容...（" + timeoutSeconds + "秒超时）");
+	} else {
+		popclip.showText(modelName + " 对话中...（" + timeoutSeconds + "秒超时）");
+	}
 
 	// 获取最大Token数
 	var maxTokensStr = popclip.options.maxTokens || "2048";
@@ -203,34 +224,25 @@ try {
 			
 			print("乔木AI：已收到来自 " + modelName + " 的对话回复（用时" + duration + "秒）");
 			
-			// 确定响应模式 - 修饰键优先于设置
-			var responseMode = popclip.options.textMode || "append";
-
-			// 修饰键覆盖（完整逻辑）
-			if (popclip.modifiers.shift) {
-				responseMode = "copy";  // Shift = 强制复制模式
-			} else if (popclip.modifiers.option) {
-				responseMode = "replace";  // Option = 强制替换模式
-			} else if (popclip.modifiers.command) {
-				responseMode = "append";  // Command = 强制追加模式
-			}
-
-			print("乔木AI：使用响应模式：" + responseMode);
-
 			// 根据确定的模式处理响应
 			if (responseMode === "copy") {
 				// 仅将AI回复复制到剪贴板
 				popclip.copyText(assistantMessage.content.trim());
-				popclip.showText("✅ 已复制到剪贴板", { preview: "复制成功" });
+				// 显示成功消息，包含生成时间
+				popclip.showText("✅ 已复制到剪贴板（用时" + duration + "秒）", { preview: "复制成功" });
 				return;
 			} else if (responseMode === "replace") {
 				// 仅用AI回复替换选中的文本
 				popclip.pasteText(assistantMessage.content.trim());
+				// 显示成功消息，包含生成时间
+				popclip.showText("✅ 内容已替换（用时" + duration + "秒）", { preview: "替换成功" });
 				return;
 			} else {
 				// 追加模式：在原文本后添加AI回复
 				var appendedText = popclip.input.text.trim() + "\n\n" + assistantMessage.content.trim();
 				popclip.pasteText(appendedText);
+				// 显示成功消息，包含生成时间
+				popclip.showText("✅ 对话已追加（用时" + duration + "秒）", { preview: "追加成功" });
 				return;
 			}
 			

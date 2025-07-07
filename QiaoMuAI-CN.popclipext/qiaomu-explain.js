@@ -1,14 +1,12 @@
-// 乔木AI助手 - 内容解释功能
-// 详细解释复杂内容
+// 乔木AI PopClip 扩展 - 内容解释
+// 基于 PopClip 官方 JavaScript 动作规范
 
 // 获取用户友好的模型显示名称
 function getModelDisplayName(modelId) {
 	var modelNames = {
-		"claude-sonnet-4-20250514": "Claude 4",
-		"claude-sonnet-4-20250514-thinking": "Claude 4 Thinking",
+		"claude-sonnet-4-20250514": "Claude 4 Sonnet",
+		"claude-sonnet-4-20250514-thinking": "Claude 4 Sonnet Thinking",
 		"claude-opus-4-20250514": "Claude 4 Opus",
-		"claude-3-haiku-20240307": "Claude 3 Haiku",
-		"claude-3-opus-20240229": "Claude 3 Opus",
 		"gemini-2.5-pro-preview-06-05": "Gemini 2.5 Pro",
 		"o3-mini": "O3 Mini",
 		"gpt-4o-mini": "GPT-4o Mini",
@@ -23,18 +21,17 @@ function getModelDisplayName(modelId) {
 // 获取超时时间（秒）
 function getTimeoutSeconds() {
 	var timeoutStr = popclip.options.requestTimeout || "60";
-	var timeoutSeconds = parseInt(timeoutStr);
-	return isNaN(timeoutSeconds) ? 60 : timeoutSeconds;
+	var timeout = parseInt(timeoutStr);
+	return isNaN(timeout) || timeout < 15 ? 60 : timeout;  // 默认60秒
 }
 
-// 优化的错误处理函数
+// 处理API错误，返回用户友好的错误消息
 function handleApiError(error) {
 	var errorMessage = error.message || "未知错误";
-	var timeoutSeconds = getTimeoutSeconds();
 	
 	// 超时错误
-	if (errorMessage.includes("timeout") || errorMessage.includes("ECONNABORTED")) {
-		return "请求超时(" + timeoutSeconds + "秒)，请检查网络或选择更快的模型";
+	if (errorMessage.includes("timeout") || errorMessage.includes("ETIMEDOUT")) {
+		return "请求超时，请检查网络连接或增加超时时间";
 	}
 	
 	// 网络连接错误
@@ -109,17 +106,31 @@ try {
 	var timeoutSeconds = getTimeoutSeconds();
 	var timeoutMs = timeoutSeconds * 1000;
 
+	// 确定响应模式 - 修饰键优先于设置
+	var responseMode = popclip.options.textMode || "append";
+
+	// 修饰键覆盖（完整逻辑）
+	if (popclip.modifiers.shift) {
+		responseMode = "copy";  // Shift = 强制复制模式
+	} else if (popclip.modifiers.option) {
+		responseMode = "replace";  // Option = 强制替换模式
+	} else if (popclip.modifiers.command) {
+		responseMode = "append";  // Command = 强制追加模式
+	}
+
+	print("乔木AI：使用响应模式：" + responseMode);
+
 	// 显示处理指示器和当前模型
 	var modelName = customModel && customModel.length > 0 ? customModel : getModelDisplayName(selectedModel);
-	popclip.showText("正在使用 " + modelName + " 解释中...（" + timeoutSeconds + "秒超时）");
-
-	// 构建解释请求消息
-	var customPrompt = popclip.options.customExplainPrompt ? popclip.options.customExplainPrompt.trim() : "";
-	var prompt = customPrompt || "请详细解释以下内容，包括其含义、背景、重要性和相关信息：";
 	
-	var messages = [
-		{ role: "user", content: prompt + "\n\n" + popclip.input.text.trim() }
-	];
+	// 根据响应模式显示不同的loading消息
+	if (responseMode === "copy") {
+		popclip.showText(modelName + " 解释内容...（" + timeoutSeconds + "秒超时）");
+	} else if (responseMode === "replace") {
+		popclip.showText(modelName + " 替换内容...（" + timeoutSeconds + "秒超时）");
+	} else {
+		popclip.showText(modelName + " 解释中...（" + timeoutSeconds + "秒超时）");
+	}
 
 	// 获取最大Token数
 	var maxTokensStr = popclip.options.maxTokens || "2048";
@@ -128,10 +139,40 @@ try {
 		maxTokens = 2048;  // 默认值
 	}
 
+	// 构建解释提示词
+	var customPrompt = popclip.options.customExplainPrompt ? popclip.options.customExplainPrompt.trim() : "";
+	var systemPrompt = customPrompt || `你是专业内容解释大师，擅长将复杂内容转化为清晰易懂的解释。
+
+## 核心使命
+用最简洁的语言，提供最清晰的解释
+
+## 解释框架
+- **核心概念**：提取主要含义和关键概念
+- **背景信息**：补充必要的背景和来源
+- **实际应用**：说明现实意义和应用价值
+- **关键要点**：总结核心知识点
+
+## 表达原则
+- **简洁明了**：用最少的文字表达最多的信息
+- **通俗易懂**：避免复杂术语，多用类比和实例
+- **逻辑清晰**：按重要性排序，层次分明
+- **重点突出**：标识关键信息，便于快速理解
+- **受众适配**：根据内容复杂度自动调整解释深度
+
+## 质量标准
+- 解释准确无误
+- 语言简洁流畅  
+- 重点突出明确
+- 易于理解记忆
+- 内容完整不遗漏`;
+
 	// 准备请求数据
 	var requestData = {
 		model: selectedModel,
-		messages: messages,
+		messages: [
+			{ role: "system", content: systemPrompt },
+			{ role: "user", content: popclip.input.text.trim() }
+		],
 		max_tokens: maxTokens,
 		temperature: 0.7
 	};
@@ -178,34 +219,25 @@ try {
 			
 			print("乔木AI：已收到来自 " + modelName + " 的解释回复（用时" + duration + "秒）");
 			
-			// 确定响应模式 - 修饰键优先于设置
-			var responseMode = popclip.options.textMode || "append";
-
-			// 修饰键覆盖（完整逻辑）
-			if (popclip.modifiers.shift) {
-				responseMode = "copy";  // Shift = 强制复制模式
-			} else if (popclip.modifiers.option) {
-				responseMode = "replace";  // Option = 强制替换模式
-			} else if (popclip.modifiers.command) {
-				responseMode = "append";  // Command = 强制追加模式
-			}
-
-			print("乔木AI：使用响应模式：" + responseMode);
-
 			// 根据确定的模式处理响应
 			if (responseMode === "copy") {
 				// 仅将AI回复复制到剪贴板
 				popclip.copyText(assistantMessage.content.trim());
-				popclip.showText("✅ 已复制到剪贴板", { preview: "复制成功" });
+				// 显示成功消息，包含生成时间
+				popclip.showText("✅ 已复制到剪贴板（用时" + duration + "秒）", { preview: "复制成功" });
 				return;
 			} else if (responseMode === "replace") {
 				// 仅用AI回复替换选中的文本
 				popclip.pasteText(assistantMessage.content.trim());
+				// 显示成功消息，包含生成时间
+				popclip.showText("✅ 内容已替换（用时" + duration + "秒）", { preview: "替换成功" });
 				return;
 			} else {
 				// 追加模式：在原文本后添加AI回复
 				var appendedText = popclip.input.text.trim() + "\n\n" + assistantMessage.content.trim();
 				popclip.pasteText(appendedText);
+				// 显示成功消息，包含生成时间
+				popclip.showText("✅ 解释内容已追加（用时" + duration + "秒）", { preview: "解释成功" });
 				return;
 			}
 			

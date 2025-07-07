@@ -21,9 +21,9 @@ function reset() {
 // 获取用户友好的模型显示名称
 function getModelDisplayName(modelId) {
 	var modelNames = {
-		"claude-sonnet-4-20250514": "Claude 4",
-		"claude-3-haiku-20240307": "Claude 3 Haiku",
-		"claude-3-opus-20240229": "Claude 3 Opus",
+		"claude-sonnet-4-20250514": "Claude 4 Sonnet",
+		"claude-sonnet-4-20250514-thinking": "Claude 4 Sonnet Thinking",
+		"claude-opus-4-20250514": "Claude 4 Opus",
 		"o3-mini": "O3 Mini",
 		"gpt-4o-mini": "GPT-4o Mini",
 		"gpt-4o": "GPT-4o",
@@ -84,37 +84,6 @@ if (customModel && customModel.length > 0) {
 	print("乔木智写：使用预设模型：" + selectedModel);
 }
 
-// 显示处理指示器和当前模型
-var modelName = customModel && customModel.length > 0 ? customModel : getModelDisplayName(selectedModel);
-popclip.showText("正在使用 " + modelName + " 处理中...");
-
-// 准备请求数据
-var requestData = {
-	model: selectedModel,
-	messages: messages,
-	max_tokens: 1000,
-	temperature: 0.7
-};
-
-// 使用axios进行HTTP请求（PopClip内置库）
-var axios = require("axios");
-
-// 发起API请求（异步操作 - PopClip自动处理异步）
-var response = await axios.post(apiEndpoint, requestData, {
-	headers: {
-		"Authorization": "Bearer " + popclip.options.apikey,
-		"Content-Type": "application/json"
-	},
-	timeout: 30000
-});
-
-var data = response.data;
-var assistantMessage = data.choices[0].message;
-messages.push(assistantMessage);
-lastChat = new Date();
-
-print("乔木智写：已收到来自 " + modelName + " 的回复");
-
 // 确定响应模式 - 修饰键优先于设置
 var responseMode = popclip.options.textMode || "append";
 
@@ -129,20 +98,69 @@ if (popclip.modifiers.shift) {
 
 print("乔木智写：使用响应模式：" + responseMode);
 
+// 显示处理指示器和当前模型
+var modelName = customModel && customModel.length > 0 ? customModel : getModelDisplayName(selectedModel);
+
+// 根据响应模式显示不同的loading消息
+if (responseMode === "copy") {
+	popclip.showText(modelName + " 生成内容...");
+} else if (responseMode === "replace") {
+	popclip.showText(modelName + " 替换内容...");
+} else {
+	popclip.showText(modelName + " 处理中...");
+}
+
+// 准备请求数据
+var requestData = {
+	model: selectedModel,
+	messages: messages,
+	max_tokens: 1000,
+	temperature: 0.7
+};
+
+// 使用axios进行HTTP请求（PopClip内置库）
+var axios = require("axios");
+
+// 发起API请求（异步操作 - PopClip自动处理异步）
+var startTime = Date.now();
+
+var response = await axios.post(apiEndpoint, requestData, {
+	headers: {
+		"Authorization": "Bearer " + popclip.options.apikey,
+		"Content-Type": "application/json"
+	},
+	timeout: 30000
+});
+
+var endTime = Date.now();
+var duration = Math.round((endTime - startTime) / 1000 * 10) / 10;  // 保留一位小数
+
+var data = response.data;
+var assistantMessage = data.choices[0].message;
+messages.push(assistantMessage);
+lastChat = new Date();
+
+print("乔木智写：已收到来自 " + modelName + " 的回复（用时" + duration + "秒）");
+
 // 根据确定的模式处理响应
 if (responseMode === "copy") {
 	// 仅将AI回复复制到剪贴板
 	popclip.copyText(assistantMessage.content.trim());
-	popclip.showText("✅ 已复制到剪贴板", { preview: "复制成功" });
+	// 显示成功消息，包含生成时间
+	popclip.showText("✅ 已复制到剪贴板（用时" + duration + "秒）", { preview: "复制成功" });
 	return;
 } else if (responseMode === "replace") {
 	// 仅用AI回复替换选中的文本
 	popclip.pasteText(assistantMessage.content.trim());
+	// 显示成功消息，包含生成时间
+	popclip.showText("✅ 内容已替换（用时" + duration + "秒）", { preview: "替换成功" });
 	return;
 } else {
 	// 追加模式：在原文本后添加AI回复
 	var appendedText = popclip.input.text.trim() + "\n\n" + assistantMessage.content.trim();
 	popclip.pasteText(appendedText);
+	// 显示成功消息，包含生成时间
+	popclip.showText("✅ 对话已追加（用时" + duration + "秒）", { preview: "追加成功" });
 	return;
 }
 
