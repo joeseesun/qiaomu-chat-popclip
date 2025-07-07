@@ -1,9 +1,9 @@
 {
   "name": "QiaoMu Chat",
   "identifier": "com.qiaomu.popclip.chat",
-  "description": "AI chat assistant powered by QiaoMu API with multiple model support",
+  "description": "AI chat assistant powered by API with multiple model support, developer:vista8, x/wechat:vista8, wechat offical:向阳乔木推荐看",
   "icon": "qiaomu-icon.svg",
-  "popclipVersion": 4151,
+  "popclipVersion": 4688,
   "entitlements": ["network"],
   "options": [
     {
@@ -62,7 +62,7 @@
       "description": "How to handle the AI response",
       "values": ["append", "copy", "replace"],
       "valueLabels": ["Append (Question + Answer)", "Copy to Clipboard Only", "Replace Selected Text"],
-      "defaultValue": "copy"
+      "defaultValue": "append"
     },
     {
       "identifier": "systemMessage",
@@ -79,14 +79,6 @@
       "icon": "qiaomu-icon.svg",
       "javascriptFile": "qiaomu-chat.js",
       "requirements": ["text"]
-    },
-    {
-      "title": "Reset",
-      "identifier": "reset",
-      "icon": "reset-icon.svg",
-      "javascriptFile": "reset.js",
-      "requirements": [],
-      "after": "show-result"
     }
   ]
 } 

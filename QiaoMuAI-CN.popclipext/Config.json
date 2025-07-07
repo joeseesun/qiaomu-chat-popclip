@@ -1,9 +1,9 @@
 {
   "name": "乔木AI助手",
   "identifier": "com.qiaomu.popclip.ai.cn",
-  "description": "多功能AI助手：对话、扩写、翻译、解释等",
+  "description": "基于API的AI智能对话和写作助手，支持多种模型。开发者向阳乔木，X/微信:vista8，公众号：向阳乔木推荐看",
   "icon": "qiaomu-icon.svg",
-  "popclipVersion": 4151,
+  "popclipVersion": 4688,
   "entitlements": ["network"],
   "options": [
     {
@@ -52,6 +52,22 @@
         "DeepSeek V3"
       ],
       "defaultValue": "claude-sonnet-4-20250514"
+    },
+    {
+      "identifier": "requestTimeout",
+      "label": "请求超时时间",
+      "type": "multiple",
+      "values": ["15", "20", "30", "40", "60", "120", "240", "360"],
+      "valueLabels": ["15秒（快速）", "20秒（标准）", "30秒（稳定）", "40秒（耐心）", "60秒（推荐）", "120秒（长文本）", "240秒（复杂任务）", "360秒（超长任务）"],
+      "defaultValue": "60"
+    },
+    {
+      "identifier": "maxTokens",
+      "label": "最大生成Token数",
+      "type": "multiple",
+      "values": ["512", "1024", "2048", "4096", "8192", "16384", "65536", "131072", "204800"],
+      "valueLabels": ["512（简短）", "1024（标准）", "2048（详细）", "4096（完整）", "8192（丰富）", "16K（长文本）", "64K（超长文本）", "128K（文档级）", "200K（书籍级）"],
+      "defaultValue": "2048"
     },
     {
       "identifier": "textMode",

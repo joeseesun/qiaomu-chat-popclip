@@ -10,7 +10,7 @@
 
 ### 🌐 多服务商支持
 - **可配置 API Base URL** - 兼容任何 OpenAI 格式的 API
-- **默认支持 TuZi API** - `https://api.tu-zi.com/v1`
+- **默认支持 TuZi API** - `https://api.tu-zi.com/v1` - [Register here](https://api.tu-zi.com/register?aff=yyaz)
 - **兼容其他服务商**：
   - DeepSeek: `https://api.deepseek.com/v1`
   - OpenAI: `https://api.openai.com/v1`
@@ -57,6 +57,7 @@
    - 配置 API Base URL（默认为 TuZi API）
    - 输入对应服务的 API Key
    - 选择默认使用的 AI 模型
+   - **🎯 Recommended**: [Register TuZi API](https://api.tu-zi.com/register?aff=yyaz) - Free credits for new users
 
 ## 使用方法
 
@@ -80,9 +81,10 @@
 
 ### 支持的服务商配置
 
-#### TuZi API (默认)
+#### TuZi API (默认推荐)
 - **Base URL**: `https://api.tu-zi.com/v1`
 - **支持模型**: Claude 4, Claude 3 系列, GPT-4o 系列等
+- **🎯 Register**: [Click to register TuZi API](https://api.tu-zi.com/register?aff=yyaz) - Free credits for new users
 
 #### DeepSeek API
 - **Base URL**: `https://api.deepseek.com/v1`
@@ -98,6 +100,17 @@
 - **Base URL**: `https://ark.cn-beijing.volces.com/api/v3/`
 - **支持模型**: 豆包系列模型等
 - **获取 API Key**: [火山引擎官网](https://console.volcengine.com/)
+
+#### Google Gemini API
+- **Base URL**: `https://generativelanguage.googleapis.com/v1beta`
+- **支持模型**: Gemini 2.5 Pro, Gemini 1.5 Pro等
+- **获取 API Key**: [Google AI Studio](https://aistudio.google.com/)
+
+#### OpenRouter API
+- **Base URL**: `https://openrouter.ai/api/v1/`
+- **支持模型**: 聚合多家AI模型，包括Claude、GPT、Gemini等
+- **获取 API Key**: [OpenRouter官网](https://openrouter.ai/)
+- **特点**: 一个API密钥访问多家AI模型，支持按需付费
 
 #### 其他兼容服务
 任何兼容 OpenAI API 格式的服务都可以使用，只需：
@@ -190,6 +203,27 @@
 
 本项目遵循 MIT 许可证。
 
-## 支持
+## 👨‍💻 About Author
 
-如有问题或建议，请联系开发者或提交 Issue。 
+### 🔥 Follow WeChat Official Account
+Get more AI tools and technical sharing
+
+![向阳乔木推荐看](https://newimg.t5t6.com/1751870053371-c2bf9308-2e52-4a15-81b4-6c7490b551cf.jpg)
+
+**向阳乔木推荐看** - Focus on AI tools sharing and technical communication
+
+### ☕ Support the Author
+If this tool is helpful to you, welcome to tip and support!
+
+![Tip QR Code](https://newimg.t5t6.com/1751870053373-97dc7339-5191-4dde-b891-bf4fb4fe8118.png)
+
+Your support is my motivation to continue developing and optimizing tools!
+
+## 💬 Contact
+
+- **WeChat**: vista8
+- **X (Twitter)**: vista8  
+- **Official Account**: 向阳乔木推荐看
+- **GitHub**: Welcome to submit Issues and PRs
+
+If you have any questions or suggestions, please contact through the above methods or submit an Issue. 

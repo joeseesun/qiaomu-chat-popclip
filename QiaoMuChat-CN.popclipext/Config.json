@@ -1,9 +1,9 @@
 {
-  "name": "乔木智写",
+  "name": "乔木AI写作辅助",
   "identifier": "com.qiaomu.popclip.chat.cn",
-  "description": "基于API的AI智能对话和写作助手，支持多种模型",
+  "description": "基于API的AI智能对话和写作助手，支持多种模型。开发者向阳乔木，X/微信:vista8，公众号：向阳乔木推荐看",
   "icon": "qiaomu-icon.svg",
-  "popclipVersion": 11,
+  "popclipVersion": 4688,
   "entitlements": ["network"],
   "options": [
     {
@@ -64,7 +64,7 @@
       "description": "如何处理AI的回复",
       "values": ["append", "copy", "replace"],
       "valueLabels": ["追加（问题+答案）", "仅复制到剪贴板", "替换选中文本"],
-      "defaultValue": "copy"
+      "defaultValue": "append"
     },
     {
       "identifier": "systemMessage",
@@ -81,14 +81,6 @@
       "icon": "qiaomu-icon.svg",
       "javascriptFile": "qiaomu-chat.js",
       "requirements": ["text"]
-    },
-    {
-      "title": "重置",
-      "identifier": "reset",
-      "icon": "reset-icon.svg",
-      "javascriptFile": "reset.js",
-      "requirements": [],
-      "after": "show-result"
     }
   ]
 } 
